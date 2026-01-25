@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import { useState } from 'react'
@@ -32,6 +33,12 @@ function App() {
         <AddRecipeForm />
         <RecipeList />
         </div>
+        <BrowserRouter>
+        <Routes>
+                <Route path="/" element={<RecipeList />} />
+                <Route path="/recipes/:id" element={<RecipeDetails />} />
+        </Routes>
+        </BrowserRouter>
         <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
         </p>
