@@ -1,3 +1,6 @@
+import SearchBar from "./components/SearchBar";
+import RecipeList from "./components/RecipeList";
+import AddRecipeForm from "./components/AddRecipeForm";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
@@ -34,6 +37,12 @@ function App() {
         <RecipeList />
         </div>
         <BrowserRouter>
+        <div>
+      <h1>Recipe Sharing App</h1>
+      <SearchBar />
+      <AddRecipeForm />
+      <RecipeList />
+    </div>
         <Routes>
                 <Route path="/" element={<RecipeList />} />
                 <Route path="/recipes/:id" element={<RecipeDetails />} />
