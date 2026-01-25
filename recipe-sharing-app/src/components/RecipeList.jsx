@@ -1,17 +1,18 @@
-import { Link } from "react-router-dom";
 import { useRecipeStore } from "./recipeStore";
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+  const recipes = useRecipeStore((state) => state.filteredRecipes);
+  const addFavorite = useRecipeStore((state) => state.addFavorite);
 
   return (
     <div>
-      <h1>Recipes</h1>
-
       {recipes.map((recipe) => (
         <div key={recipe.id}>
           <h3>{recipe.title}</h3>
-          <Link to={`/recipes/${recipe.id}`}>View Details</Link>
+          <p>{recipe.description}</p>
+          <button onClick={() => addFavorite(recipe.id)}>
+            Add to Favorites
+          </button>
         </div>
       ))}
     </div>
