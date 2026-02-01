@@ -1,24 +1,29 @@
 import axios from "axios";
 
-export const fetchUserData = async (username) => {
-  const response = await axios.get(`https://api.github.com/users/${username}`);
+const BASE_URL = "https://api.github.com";
+
+export async function fetchUserData(username) {
+  const response = await axios.get(`${BASE_URL}/users/${username}`);
   return response.data;
-};
+}
 
-export const searchUsers = async ({ username, location, minRepos, page = 1 }) => {
-  let query = "";
+export async function fetchAdvancedUsers({ username, location, minRepos }) {
+  let queryParts = [];
 
-  if (username) query += `${username} `;
-  if (location) query += `location:${location} `;
-  if (minRepos) query += `repos:>=${minRepos} `;
+  if (username) queryParts.push(username);
+  if (location) queryParts.push(`location:${location}`);
+  if (minRepos) queryParts.push(`repos:>=${minRepos}`);
 
-  const response = await axios.get("https://api.github.com/search/users", {
-    params: {
-      q: query.trim(),
-      per_page: 10,
-      page,
+  const query = queryParts.join(" ").trim();
+
+  const response = await axios.get(`${BASE_URL}/search/users`, {
+    params: { q: query },
+    headers: {
+      Authorization: import.meta.env.VITE_APP_GITHUB_API_KEY
+        ? `token ${import.meta.env.VITE_APP_GITHUB_API_KEY}`
+        : undefined,
     },
   });
 
-  return response.data;
-};
+  return response.data.items;
+}
