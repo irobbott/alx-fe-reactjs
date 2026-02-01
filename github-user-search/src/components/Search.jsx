@@ -15,7 +15,7 @@ function Search() {
 
   const [hasMore, setHasMore] = useState(false);
 
-  const fetchUserExtraData = async (login) => {
+  const fetchUserData = async (login) => {
     const res = await axios.get(`https://api.github.com/users/${login}`);
     return res.data;
   };
@@ -40,7 +40,7 @@ function Search() {
 
       const detailedUsers = await Promise.all(
         users.map(async (u) => {
-          const details = await fetchUserExtraData(u.login);
+          const details = await fetchUserData(u.login);
           return {
             id: u.id,
             login: u.login,
